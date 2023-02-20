@@ -1,1 +1,1 @@
-# Multimedia-Search-System
+# 多媒体检索系统
