@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片匹配结果</title>
+    <style>
+        div img{
+        border:dashed 5px white;
+        border-right:solid 10px white;
+        border-top: solid 10px white;
+        border-bottom: solid 10px white;
+        border-left:  solid 10px white;
+        }
+
+    </style>
+    <style type="text/css">
+        body,ul,h3{
+            /*清除默认格式中的margin 和 padding*/
+            margin:0;
+            padding:0;
+        }
+        ul{
+            /*清除ul默认格式中的.*/
+            list-style: none;
+        }
+        /*清除margin-top塌陷*/
+        .clearfix:before,.clearfix:after{
+            content:"";
+            display:table;
+        }
+        /*清除浮动*/
+        .clearfix:after{
+            clear:both;
+        }
+        /*兼容IE*/
+        .clearfix{
+            zoom:1;
+        }
+
+
+        .pic_list_con{
+
+            border:1px solid #ddd;
+            /*多出来的ul要剪掉*/
+            overflow:hidden;
+        }
+        .pic_list_con h3{
+
+            height:50px;
+            border-bottom: 1px solid #ddd;
+            /*是h3居中，不是h3中的文字居中哦！*/
+            margin:0 auto;
+        }
+        .pic_list_con h3 span{
+            /*内联元素转为内联块元素，支持全部样式*/
+            display:inline-block;
+            height:50px;
+            border-bottom: 2px solid red;
+            font: 18px/50px 'Microsoft YaHei UI';
+            padding:0 15px;
+        }
+        .pic_list_con ul{
+            width: 950px;
+            margin:20px 0 13px 20px;
+        }
+        .pic_list_con ul li{
+            width:160px;
+            height:68px;
+            /*多个div在一个页面上，默认情况是：一行一个div，但是只要在div的css中使用
+            float：left，可以使一行有多个div，这样可以把网页划分成很多块，
+            但是使用该属性会影响后面的元素，所有如果后面的div不想再被影响，
+            可以使用clear:both；
+            可以理解为清除float:left和float:right的影响，返回到默认状态。*/
+            float:left;
+            margin:0 29px 25px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!--输出样式-->
+    <div class="pic_list_con">
+        <h3><span>匹配结果</span></h3>
+        <span><img src="../static/images/adult-bald-beard.jpg" alt="/" height="200px"/></span>
+        <span><img src="../static/images/a-beautiful-day-good-mood.jpg" alt="/" height="200px"/></span>
+        <span><img src="../static/images/a-house-house-for.jpg" alt="/" height="200px"/></span><br>
+{% for p in images_result %}
+       &emsp;&emsp;&emsp;&emsp; &emsp;{{ p.tags }}&emsp;&emsp;&emsp;&emsp;&emsp;
+    {% endfor %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+<meta charset="utf-8">
+<title>多媒体搜索系统</title>
+<link rel="stylesheet" href="../static/css/search.css">
+</head>
+
+<body>
+    <div id="title">
+    <h1 style="text-align:center;font-size:40px;font-family:华文宋体;color:rgb(0, 50, 150);"><big>多媒体检索系统</big></h1>
+    </div>
+
+ <div id="search_type" class="div1" style="left:350px; top:150px; width: 800px;height: 100px;line-height: 30px;text-align:center;">
+    <center>
+   <ul>
+      <li>
+           <a href="{% url 'search_text' %}">文字</a>
+            </li>
+            <li>
+                <a href="{% url 'search_image' %}">图片</a>
+            </li>
+            <li>
+                <a href="{% url 'search_music' %}">音频</a>
+            </li>
+        </ul>
+    </center>
+</div>
+
+    <div id="searchbox">
+    <form action="{% url "search_text" %}" method="post" >
+    {% csrf_token %}
+
+        <input type="text" id="search_text" name="q">
+        <input type="submit" id="submit" style="color:brown" value="">
+        <br><br><br>
+    </form>
+    <br>
+</div>
+
+</body>
+</html>
+
+
