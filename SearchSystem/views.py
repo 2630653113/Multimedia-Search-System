@@ -1,14 +1,15 @@
 from django.shortcuts import render
 import os
 from haystack.views import SearchView
-from SearchSystem.models import Images
+from SearchSystem.models import *
 from django.http import HttpResponse
-from forms import UploadFileForm
+from .forms import UploadFileForm
 import numpy as np
 import librosa
 import keras
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
+from .models import *
 
 
 # Create your views here.
@@ -94,22 +95,26 @@ def search_music(request):
         return render(request, 'base_music.html')
     if request.method == "POST":
         # 获取用户搜索的音频并处理
-        form = UploadFileForm(request.POST, request.FILES)
-        class_mapping = {
-            0: 'blues',
-            1: 'classical',
-            2: 'country',
-            3: 'disco',
-            4: 'hiphop',
-            5: 'jazz',
-            6: 'metal',
-            7: 'pop',
-            8: 'reggae',
-            9: 'rock'
-        }
-        audio_file = './temp/tobepredicted.wav'
-        if form.is_valid():
-            save_music(request.FILES['file'])
+        file = request.FILES.get('music', None)
+        if file is None:
+            return render(request, 'base_music.html')
+        else:
+            with open("D:\PythonProjects\MultiMedia\SearchSystem\\tmp\music.wav", 'wb+') as f:
+                for chunk in file.chunks():
+                    f.write(chunk)
+            class_mapping = {
+                0: 'blues',
+                1: 'classical',
+                2: 'country',
+                3: 'disco',
+                4: 'hiphop',
+                5: 'jazz',
+                6: 'metal',
+                7: 'pop',
+                8: 'reggae',
+                9: 'rock'
+            }
+            audio_file = 'D:\PythonProjects\MultiMedia\SearchSystem\\tmp\music.wav'
             # 截取音频文件的中间30s
             duration = librosa.get_duration(filename=audio_file)  # 获取音频时长
             start = (duration - 30) / 2  # 计算中间30秒的起始点
@@ -176,7 +181,7 @@ def search_music(request):
                  tempo, mfccs_processed), axis=None)
 
             # 加入原数据集以归一化
-            data = pd.read_csv("features_30_sec.csv")  # 读取CSV文件
+            data = pd.read_csv("D:\PythonProjects\MultiMedia\SearchSystem\modelfile\\features_30_sec.csv")  # 读取CSV文件
             data = data.drop(labels="filename", axis=1)  # 删除标签为filename的数据，axis=1表示从列中删除
             data = data.drop(labels="label", axis=1)  # 删除标签为filename的数据，axis=1表示从列中删除
             data.loc[len(data.index)] = features
@@ -188,7 +193,7 @@ def search_music(request):
             music = X[-1]
 
             # 加载已经训练好的模型
-            model = keras.models.load_model('audio_model.h5')
+            model = keras.models.load_model('D:\PythonProjects\MultiMedia\SearchSystem\modelfile\\audio_model.h5')
 
             # 使用模型进行预测
             y_pred = model.predict(music.reshape(1, -1))
@@ -196,19 +201,19 @@ def search_music(request):
             predicted_genre = class_mapping[predicted_class[0]]
             print('Predicted class:', predicted_genre)
 
-        images_list = Images.objects.all()
-        content = {'images_result': images_list}
-        return render(request, 'image_search.html', content)
+        music_list = Music.objects.filter(tag=predicted_class[0])
+        content = {'music_result': music_list}
+        return render(request, 'music_result.html', content)
 
 
 # 保存上传的音频和图片
 def save_music(file):
-    with open('./temp/tobepredicted.wav', 'wb+') as destination:
+    with open('tmp/music.wav', 'wb+') as destination:
         for chunk in file.chunks():
             destination.write(chunk)
 
 
 def save_image(file):
-    with open('./temp/...', 'wb+') as destination:
+    with open('tmp/...', 'wb+') as destination:
         for chunk in file.chunks():
             destination.write(chunk)

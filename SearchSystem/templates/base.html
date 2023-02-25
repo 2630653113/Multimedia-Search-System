@@ -61,7 +61,7 @@
 </div>
 
     <div id="searchbox">
-    <form action="{% url "search_image" %}" method="post" >
+    <form action="{% url "search_image" %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
 
         <input type="text" id="search_text" name="q">

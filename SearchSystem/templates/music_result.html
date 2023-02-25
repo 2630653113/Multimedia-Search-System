@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>音频搜索结果</title>
+</head>
+<body>
+<ul>
+{% for c in music_result %}
+    <li>{{ c.name }}</li>
+{% endfor %}
+</ul>
+</body>
+</html>
