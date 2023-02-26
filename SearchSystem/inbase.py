@@ -7,19 +7,19 @@ if __name__ == '__main__':
     from SearchSystem.models import Music, Images
 
     class_mapping = {
-        0: 'blues',
-        1: 'classical',
-        2: 'country',
-        3: 'disco',
-        4: 'hiphop',
-        5: 'jazz',
-        6: 'metal',
-        7: 'pop',
-        8: 'reggae',
-        9: 'rock'
+        0: '0',
+        1: '1',
+        2: '2',
+        3: '3',
+        4: '4',
+        5: '5',
+        6: '6',
+        7: '7',
+        8: '8',
+        9: '9'
     }
 
-    root_path = 'D:\PythonProjects\MultiMedia\Source\music\\'
+    root_path = 'D:\PythonProjects\MultiMedia\SearchSystem\static\Music\\'
     for index in range(10):
         path = root_path + class_mapping[index] + '\\'
         music_list = os.listdir(path)

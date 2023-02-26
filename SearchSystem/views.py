@@ -103,16 +103,16 @@ def search_music(request):
                 for chunk in file.chunks():
                     f.write(chunk)
             class_mapping = {
-                0: 'blues',
-                1: 'classical',
-                2: 'country',
-                3: 'disco',
-                4: 'hiphop',
-                5: 'jazz',
-                6: 'metal',
-                7: 'pop',
-                8: 'reggae',
-                9: 'rock'
+                0: '0',
+                1: '1',
+                2: '2',
+                3: '3',
+                4: '4',
+                5: '5',
+                6: '6',
+                7: '7',
+                8: '8',
+                9: '9'
             }
             audio_file = 'D:\PythonProjects\MultiMedia\SearchSystem\\tmp\music.wav'
             # 截取音频文件的中间30s
